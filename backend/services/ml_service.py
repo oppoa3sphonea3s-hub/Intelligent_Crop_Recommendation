@@ -14,20 +14,32 @@ MODELS_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..', 'saved_models')
 )
 
+
 # Load serialized model & metrics
+BEST_MODEL = None
+METRICS = {}
+
+model_path = os.path.join(MODELS_DIR, 'crop_best_model.joblib')
+metrics_path = os.path.join(MODELS_DIR, 'crop_metrics.json')
+
 try:
-    BEST_MODEL = joblib.load(os.path.join(MODELS_DIR, 'crop_best_model.joblib'))
-    with open(os.path.join(MODELS_DIR, 'crop_metrics.json'), 'r') as f:
-        METRICS = json.load(f)
+    print("MODEL PATH:", model_path)
+    print("MODEL EXISTS:", os.path.isfile(model_path))
+
+    BEST_MODEL = joblib.load(model_path)
+    print("CROP MODEL LOADED SUCCESSFULLY")
+
 except Exception as e:
-    print("MODEL LOADING ERROR:", repr(e))
-    print("MODELS DIRECTORY:", MODELS_DIR)
-    print("DIRECTORY EXISTS:", os.path.exists(MODELS_DIR))
-    print("MODEL FILE EXISTS:", os.path.exists(
-        os.path.join(MODELS_DIR, 'crop_best_model.joblib')
-    ))
-    BEST_MODEL = None
-    METRICS = {}
+    print("CROP MODEL LOAD FAILED:", type(e).__name__, str(e))
+
+try:
+    with open(metrics_path, 'r') as f:
+        METRICS = json.load(f)
+    print("CROP METRICS LOADED SUCCESSFULLY")
+
+except Exception as e:
+    print("CROP METRICS LOAD FAILED:", type(e).__name__, str(e))
+
 
 # Comprehensive Agronomic profiles for all 22 supported crops
 CROP_AGRONOMIC_PROFILES = {
