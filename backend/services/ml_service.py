@@ -20,7 +20,12 @@ try:
     with open(os.path.join(MODELS_DIR, 'crop_metrics.json'), 'r') as f:
         METRICS = json.load(f)
 except Exception as e:
-    print(f"Warning: Models not loaded yet ({e}). Run crop_model.py first.")
+    print("MODEL LOADING ERROR:", repr(e))
+    print("MODELS DIRECTORY:", MODELS_DIR)
+    print("DIRECTORY EXISTS:", os.path.exists(MODELS_DIR))
+    print("MODEL FILE EXISTS:", os.path.exists(
+        os.path.join(MODELS_DIR, 'crop_best_model.joblib')
+    ))
     BEST_MODEL = None
     METRICS = {}
 
