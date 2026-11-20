@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 def load_crop_data(filepath=None):
     """Load the genuine 2200-sample crop recommendation dataset."""
     if filepath is None:
-        filepath = os.path.join(os.path.dirname(__file__), 'datasets', 'crop_recommendation.csv')
+      filepath = os.path.join(os.path.dirname(__file__), 'crop_recommendation.csv')
     df = pd.read_csv(filepath)
     df.columns = [c.strip() for c in df.columns]
     return df
